@@ -266,6 +266,15 @@
             });
             draw();//初回表示
         });
+                window.onload = function onLoad() {
+
+            var params = new URLSearchParams(window.location.search);
+
+            var target = document.getElementById("address");
+            if (params.has("address") == true) {
+                $("#address").val(params.get("address"));
+            }
+        }
     </script>
 </body>
 
