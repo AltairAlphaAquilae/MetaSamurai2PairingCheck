@@ -137,10 +137,37 @@
                                 }
                                 // tr要素をtable要素の子要素に追加
                                 table.appendChild(tr);
-                                // 生成したtable要素を追加する
-                                document.getElementById('maintable').appendChild(table);
                             }
                         }
+                        // 生成したtable要素を追加する
+                        document.getElementById('maintable').appendChild(table);
+                        var table = document.createElement('table');
+
+                        // ヘッダーを作成
+                        var tr = document.createElement('tr');
+
+                        var th = document.createElement('th');
+                        th.textContent = "Item Name";
+                        tr.appendChild(th);
+                        var th = document.createElement('th');
+                        th.textContent = "Cumulative acquisition";
+                        tr.appendChild(th);
+
+                        // tr要素をtable要素の子要素に追加
+                        table.appendChild(tr);
+
+                                // th・td部分のループ
+                                for (key in total_table) {
+                                    var tr = document.createElement('tr');
+                                    var td = document.createElement('td');
+                                    td.textContent = key;
+                                    tr.appendChild(td);
+                                    td = document.createElement('td');
+                                    td.textContent = total_table[key];
+                                    tr.appendChild(td);
+                                    table.appendChild(tr);
+                                }
+                        document.getElementById('totaltable').appendChild(table);
                     },
                     error: function (data) {
 
@@ -219,7 +246,10 @@
         </p>
         <p><input type="button" value="Check DEFY Loot Items Log" id="button"></p>
     </form>
-    <!--テーブル生成位置-->
+    <p>Total DEFY Loot Item you got (item burning is not consider ):</p>
+    <div id='totaltable'></div>
+    <hr>
+    <p>DEFY Loot Item Log:</p>
     <div id='maintable'></div>
 
     <!--ページングボタン配置-->
