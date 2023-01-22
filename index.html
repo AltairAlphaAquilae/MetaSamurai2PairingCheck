@@ -131,6 +131,11 @@
                                                     break;
 
                                             }
+                                            if (!(td.textContent in total_table)) {
+                                                total_table[td.textContent] = Number(json[i]["tokenValue"]);
+                                            }else{
+                                                total_table[td.textContent] += Number(json[i]["tokenValue"]);
+                                            }
                                         } else {
                                             td.textContent = json[i][key];
                                         }
