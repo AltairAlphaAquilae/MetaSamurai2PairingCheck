@@ -193,16 +193,16 @@
                                 if (list_katana_vol[i] < list_item_vol[i]) {
                                     td.textContent = "";
                                 }
-                                else{
-                                    td.textContent = String(list_katana_vol[i]-list_item_vol[i]);
+                                else {
+                                    td.textContent = String(list_katana_vol[i] - list_item_vol[i]);
                                 }
                                 tr.appendChild(td);
                                 var td = document.createElement('td');
                                 if (list_katana_vol[i] > list_item_vol[i]) {
                                     td.textContent = "";
                                 }
-                                else{
-                                    td.textContent = String(list_item_vol[i]-list_katana_vol[i]);
+                                else {
+                                    td.textContent = String(list_item_vol[i] - list_katana_vol[i]);
                                 }
                                 tr.appendChild(td);
                                 table.appendChild(tr);
@@ -281,6 +281,18 @@
     <p>ウォレット内のトークン一覧：<br>
     <div id='maintable'></div>
 
+    <script>// ページング機能
+        window.onload = function onLoad() {
+
+            var params = new URLSearchParams(window.location.search);
+
+            var target = document.getElementById("address");
+            if (params.has("address") == true) {
+                $("#address").val(params.get("address"));
+                document.getElementById("button").click();
+            }
+        }
+    </script>
 </body>
 
 </html>
