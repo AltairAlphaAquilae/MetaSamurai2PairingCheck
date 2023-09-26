@@ -180,7 +180,7 @@
                         tr.appendChild(th);
                         table.appendChild(tr);
 
-                        for (var i = 1; i <= list_item_name.length; i++) {
+                        for (var i = 1; i <= list_katana_name.length - 2; i++) {
                             if (list_katana_vol[i] != list_item_vol[i]) {
                                 var tr = document.createElement('tr');
                                 var td = document.createElement('td');
@@ -208,6 +208,60 @@
                                 table.appendChild(tr);
                             }
                         }
+                            if (list_katana_vol[i] != list_item_vol[i]) {
+                                var tr = document.createElement('tr');
+                                var td = document.createElement('td');
+                                td.textContent = String(i + 1);
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                td.textContent = list_item_name[i];
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                if (list_katana_vol[i] > list_item_vol[i]) {
+                                    td.textContent = "";
+                                }
+                                else {
+                                    td.textContent = String(list_item_vol[i] - list_katana_vol[i]);
+                                }
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                if (list_katana_vol[i] < list_item_vol[i]) {
+                                    td.textContent = "";
+                                }
+                                else {
+                                    td.textContent = String(list_katana_vol[i] - list_item_vol[i]);
+                                }
+                                tr.appendChild(td);
+                                table.appendChild(tr);
+                            }
+                        var red_item_num = list_item_vol[list_katana_name.length-1]+list_item_vol[list_katana_name.length]+list_item_vol[list_katana_name.length+1]+list_item_vol[list_katana_name.length+2]+list_item_vol[list_katana_name.length+3]+list_item_vol[list_katana_name.length+4]+list_item_vol[list_katana_name.length+5]+list_item_vol[list_katana_name.length+6]+list_item_vol[list_katana_name.length+7]+list_item_vol[list_katana_name.length+8]
+                        if (list_katana_vol[list_katana_name.length-1] != red_item_num) {
+                                var tr = document.createElement('tr');
+                                var td = document.createElement('td');
+                                td.textContent = "20~30";
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                td.textContent = list_katana_name[list_katana_name.length-1];
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                if (list_katana_vol[list_katana_name.length-1] < red_item_num) {
+                                    td.textContent = String(red_item_num - list_katana_vol[list_katana_name.length-1]);
+                                }
+                                else {
+                                    td.textContent = "";
+                                }
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                if (list_katana_vol[list_katana_name.length-1] > red_item_num) {
+                                    td.textContent = String(list_katana_vol[list_katana_name.length-1] - red_item_num);
+                                }
+                                else {
+                                    td.textContent = "";
+                                }
+                                tr.appendChild(td);
+                                table.appendChild(tr);
+                            }
+
                         document.getElementById('totaltable').appendChild(table);
                     },
 
