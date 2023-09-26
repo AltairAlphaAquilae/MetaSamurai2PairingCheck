@@ -72,6 +72,15 @@
                     "Zombie Beast"
                 ]
 
+                var target = document.getElementById("totaltable_child");
+                if(target){
+                   target.remove();
+                }
+                var target = document.getElementById("maintable_child");
+                if(target){
+                    target.remove();
+                }
+                
                 $.ajax({
                     type: 'get',
                     url: url_katana,
@@ -118,6 +127,7 @@
                         }
                         // table要素を生成
                         var table = document.createElement('table');
+                        table.id="totaltable_child";
                         var tr = document.createElement('tr');
                         var th = document.createElement('th');
                         th.textContent = "ID";
@@ -165,6 +175,7 @@
                         //
                         // table要素を生成
                         var table = document.createElement('table');
+                        table.id="maintable_child";
                         var tr = document.createElement('tr');
                         var th = document.createElement('th');
                         th.textContent = "ID";
