@@ -190,19 +190,19 @@
                                 td.textContent = list_item_name[i];
                                 tr.appendChild(td);
                                 var td = document.createElement('td');
-                                if (list_katana_vol[i] < list_item_vol[i]) {
-                                    td.textContent = "";
-                                }
-                                else {
-                                    td.textContent = String(list_katana_vol[i] - list_item_vol[i]);
-                                }
-                                tr.appendChild(td);
-                                var td = document.createElement('td');
                                 if (list_katana_vol[i] > list_item_vol[i]) {
                                     td.textContent = "";
                                 }
                                 else {
                                     td.textContent = String(list_item_vol[i] - list_katana_vol[i]);
+                                }
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                if (list_katana_vol[i] < list_item_vol[i]) {
+                                    td.textContent = "";
+                                }
+                                else {
+                                    td.textContent = String(list_katana_vol[i] - list_item_vol[i]);
                                 }
                                 tr.appendChild(td);
                                 table.appendChild(tr);
