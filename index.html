@@ -73,14 +73,14 @@
                 ]
 
                 var target = document.getElementById("totaltable_child");
-                if(target){
-                   target.remove();
-                }
-                var target = document.getElementById("maintable_child");
-                if(target){
+                if (target) {
                     target.remove();
                 }
-                
+                var target = document.getElementById("maintable_child");
+                if (target) {
+                    target.remove();
+                }
+
                 $.ajax({
                     type: 'get',
                     url: url_katana,
@@ -127,7 +127,7 @@
                         }
                         // table要素を生成
                         var table = document.createElement('table');
-                        table.id="totaltable_child";
+                        table.id = "totaltable_child";
                         var tr = document.createElement('tr');
                         var th = document.createElement('th');
                         th.textContent = "ID";
@@ -175,7 +175,7 @@
                         //
                         // table要素を生成
                         var table = document.createElement('table');
-                        table.id="maintable_child";
+                        table.id = "maintable_child";
                         var tr = document.createElement('tr');
                         var th = document.createElement('th');
                         th.textContent = "ID";
@@ -188,6 +188,12 @@
                         tr.appendChild(th);
                         var th = document.createElement('th');
                         th.textContent = "Katana";
+                        tr.appendChild(th);
+                        var th = document.createElement('th');
+                        th.textContent = "Opensea Link";
+                        tr.appendChild(th);
+                        var th = document.createElement('th');
+                        th.textContent = "Opensea Link";
                         tr.appendChild(th);
                         table.appendChild(tr);
 
@@ -216,62 +222,131 @@
                                     td.textContent = String(list_katana_vol[i] - list_item_vol[i]);
                                 }
                                 tr.appendChild(td);
+                                var td = document.createElement('td');
+                                var aTag = document.createElement('a');
+                                aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/' + Number(i + 1);
+                                aTag.innerText = "Item Link";
+                                aTag.target = "_blank"
+                                td.appendChild(aTag);
+                                tr.appendChild(td);
+                                var td = document.createElement('td');
+                                var aTag = document.createElement('a');
+                                aTag.href = 'https://opensea.io/assets/ethereum/0x726ec2b0af514706f2e3be115798700450267c1c/' + Number(i + 1);
+                                aTag.innerText = "Katana Link";
+                                aTag.target = "_blank"
+                                td.appendChild(aTag);
+                                tr.appendChild(td);
                                 table.appendChild(tr);
                             }
                         }
-                            if (list_katana_vol[i] != list_item_vol[i]) {
-                                var tr = document.createElement('tr');
-                                var td = document.createElement('td');
-                                td.textContent = String(i + 1);
-                                tr.appendChild(td);
-                                var td = document.createElement('td');
-                                td.textContent = list_item_name[i];
-                                tr.appendChild(td);
-                                var td = document.createElement('td');
-                                if (list_katana_vol[i] > list_item_vol[i]) {
-                                    td.textContent = "";
-                                }
-                                else {
-                                    td.textContent = String(list_item_vol[i] - list_katana_vol[i]);
-                                }
-                                tr.appendChild(td);
-                                var td = document.createElement('td');
-                                if (list_katana_vol[i] < list_item_vol[i]) {
-                                    td.textContent = "";
-                                }
-                                else {
-                                    td.textContent = String(list_katana_vol[i] - list_item_vol[i]);
-                                }
-                                tr.appendChild(td);
-                                table.appendChild(tr);
+
+                        var red_item_num = list_item_vol[list_katana_name.length - 1] + list_item_vol[list_katana_name.length] + list_item_vol[list_katana_name.length + 1] + list_item_vol[list_katana_name.length + 2] + list_item_vol[list_katana_name.length + 3] + list_item_vol[list_katana_name.length + 4] + list_item_vol[list_katana_name.length + 5] + list_item_vol[list_katana_name.length + 6] + list_item_vol[list_katana_name.length + 7] + list_item_vol[list_katana_name.length + 8]
+                        red_item_num = red_item_num + 1;
+                        if (list_katana_vol[list_katana_name.length - 1] != red_item_num) {
+                            var tr = document.createElement('tr');
+                            var td = document.createElement('td');
+                            td.textContent = "20~30";
+                            tr.appendChild(td);
+                            var td = document.createElement('td');
+                            td.textContent = list_katana_name[list_katana_name.length - 1];
+                            tr.appendChild(td);
+                            var td = document.createElement('td');
+                            if (list_katana_vol[list_katana_name.length - 1] < red_item_num) {
+                                td.textContent = String(red_item_num - list_katana_vol[list_katana_name.length - 1]);
                             }
-                        var red_item_num = list_item_vol[list_katana_name.length-1]+list_item_vol[list_katana_name.length]+list_item_vol[list_katana_name.length+1]+list_item_vol[list_katana_name.length+2]+list_item_vol[list_katana_name.length+3]+list_item_vol[list_katana_name.length+4]+list_item_vol[list_katana_name.length+5]+list_item_vol[list_katana_name.length+6]+list_item_vol[list_katana_name.length+7]+list_item_vol[list_katana_name.length+8]
-                        if (list_katana_vol[list_katana_name.length-1] != red_item_num) {
-                                var tr = document.createElement('tr');
-                                var td = document.createElement('td');
-                                td.textContent = "20~30";
-                                tr.appendChild(td);
-                                var td = document.createElement('td');
-                                td.textContent = list_katana_name[list_katana_name.length-1];
-                                tr.appendChild(td);
-                                var td = document.createElement('td');
-                                if (list_katana_vol[list_katana_name.length-1] < red_item_num) {
-                                    td.textContent = String(red_item_num - list_katana_vol[list_katana_name.length-1]);
-                                }
-                                else {
-                                    td.textContent = "";
-                                }
-                                tr.appendChild(td);
-                                var td = document.createElement('td');
-                                if (list_katana_vol[list_katana_name.length-1] > red_item_num) {
-                                    td.textContent = String(list_katana_vol[list_katana_name.length-1] - red_item_num);
-                                }
-                                else {
-                                    td.textContent = "";
-                                }
-                                tr.appendChild(td);
-                                table.appendChild(tr);
+                            else {
+                                td.textContent = "";
                             }
+                            tr.appendChild(td);
+                            var td = document.createElement('td');
+                            if (list_katana_vol[list_katana_name.length - 1] > red_item_num) {
+                                td.textContent = String(list_katana_vol[list_katana_name.length - 1] - red_item_num);
+                            }
+                            else {
+                                td.textContent = "";
+                            }
+                            tr.appendChild(td);
+                            var td = document.createElement('td');
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/21';
+                            aTag.innerText = "Item Link:Fuma";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/22';
+                            aTag.innerText = "Item Link:Blaze";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/23';
+                            aTag.innerText = "Item Link:Dynasty";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/24';
+                            aTag.innerText = "Item Link:Mars";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/25';
+                            aTag.innerText = "Item Link:Flying Gantai";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/26';
+                            aTag.innerText = "Item Link:momonari";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/27';
+                            aTag.innerText = "Item Link:Black ink";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/28';
+                            aTag.innerText = "Item Link:Oni";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/29';
+                            aTag.innerText = "Item Link:Spike";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0xd1b78d9c30671a8cf3a1fcc64de59d17f54a82c9/30';
+                            aTag.innerText = "Item Link:Zombie Beast";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            var br = document.createElement('br');
+                            td.appendChild(br);
+                            tr.appendChild(td);
+                            var td = document.createElement('td');
+                            var aTag = document.createElement('a');
+                            aTag.href = 'https://opensea.io/assets/ethereum/0x726ec2b0af514706f2e3be115798700450267c1c/21';
+                            aTag.innerText = "Katana Link";
+                            aTag.target = "_blank"
+                            td.appendChild(aTag);
+                            tr.appendChild(td);
+                            table.appendChild(tr);
+                        }
 
                         document.getElementById('totaltable').appendChild(table);
                     },
@@ -312,6 +387,16 @@
             background: rgb(0, 0, 0);
             color: rgb(106, 212, 0);
             text-align: center;
+        }
+
+        a:link {
+            color: #61e10b;
+            text-decoration: underline;
+        }
+
+        a:visited {
+            color: #c0a8d5;
+            text-decoration: underline;
         }
 
         table {
