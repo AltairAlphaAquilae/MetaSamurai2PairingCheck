@@ -6,15 +6,30 @@
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
     <script type="text/javascript">
+        function compare(a, b) {
+            let rtn_value = 0;
+            if (a.timeStamp > b.timeStamp) {
+                rtn_value = 1;
+            } else if (b.timeStamp > a.timeStamp) {
+                rtn_value = -1;
+            }
+            return rtn_value;
+        }
         $(function () {
             $("#response").html("Response Values");
 
             $("#button").click(function () {
                 var url_katana = "https://api.etherscan.io/api?module=account&contractaddress=0x726EC2B0AF514706f2E3Be115798700450267c1C&apikey=T86KCJ94KGUE33ZSC49HT4CIKM5MV7IDM4&action=token1155tx&startblock=0&endblock=99999999&sort=desc&address=" + $("#address").val();
                 var url_item = "https://api.etherscan.io/api?module=account&contractaddress=0xD1B78d9C30671A8CF3a1fCC64DE59D17F54A82C9&apikey=T86KCJ94KGUE33ZSC49HT4CIKM5MV7IDM4&action=token1155tx&startblock=0&endblock=99999999&sort=desc&address=" + $("#address").val();
+
+                var url_ms2 = "https://api.etherscan.io/api?module=account&contractaddress=0x58805f97b90329ce2e1433db0953ed169ae303f6&apikey=T86KCJ94KGUE33ZSC49HT4CIKM5MV7IDM4&action=tokennfttx&startblock=0&endblock=99999999&sort=desc&address=" + $("#address").val();
+
                 var list_katana_vol = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 var list_item_vol = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
+                var list_ms2 = {}
+                var list_png = [0]
+                var png_num = 0
+                var listed_png_num = 0
                 var list_katana_name = [
                     "",
                     "AirSmokeZero-ORG",
@@ -80,7 +95,10 @@
                 if (target) {
                     target.remove();
                 }
-
+                var target = document.getElementById("fusiontable_child");
+                if (target) {
+                    target.remove();
+                }
                 $.ajax({
                     type: 'get',
                     url: url_katana,
@@ -108,6 +126,46 @@
                         $("#response").html(JSON.stringify(data));
                     }
                 });
+                $.ajax({
+                    type: 'get',
+                    url: url_ms2,
+                    scriptCharset: 'utf-8',
+                    success: function (data) {
+
+                        json = data.result;
+                        json.sort(compare);
+                        for (var i = 0; i < json.length; i++) {
+                            if (json[i]["to"] == $("#address").val().toLowerCase()) {
+                                list_ms2[json[i]["tokenID"]] = 1;
+                            }
+                            else {
+                                delete list_ms2[json.tokenID];
+                            }
+                        }
+
+                        for (var i = 0; i < Object.keys(list_ms2).length; i++) {
+                            expression = Object.entries(list_ms2)[i];
+                            $.ajax({
+                                type: 'get',
+                                url: 'https://fusion-metadata.metasamurai.world/' + expression[0],
+                                scriptCharset: 'utf-8',
+                                success: function (data) {
+                                    list_png[png_num++] = data.image
+                                },
+                                error: function (data) {
+                                    // Error
+                                }
+                            });
+                        }
+                    },
+                    error: function (data) {
+                        // Error
+                        alert("error");
+                        alert(JSON.stringify(data));
+                        $("#response").html(JSON.stringify(data));
+                    }
+                });
+
                 $.ajax({
                     type: 'get',
                     url: url_item,
@@ -348,6 +406,30 @@
                         }
 
                         document.getElementById('totaltable').appendChild(table);
+
+                        // table要素を生成
+                        var table = document.createElement('table');
+                        table.id = "fusiontable_child";
+
+                        for (var i = 0; i < list_png.length; i++) {
+                            if (i % 5 == 0) {
+                                tr = document.createElement('tr');
+                            }
+                            var td = document.createElement('td');
+                            var imgTag = document.createElement('img');
+                            imgTag.src = list_png[i];
+                            imgTag.width = window.innerWidth / 6;
+                            imgTag.height = window.innerWidth / 6;
+                            td.appendChild(imgTag);
+                            tr.appendChild(td);
+                            listed_png_num++;
+                            if (listed_png_num % 5 == 0 || i == list_png.length - 1) {
+                                table.appendChild(tr);
+                                listed_png_num = 0;
+                            }
+                        }
+                        document.getElementById('fusiontable').appendChild(table);
+
                     },
 
                     error: function (data) {
@@ -394,7 +476,7 @@
         }
 
         a:visited {
-            color: #c0a8d5;
+            color: #a783c8;
             text-decoration: underline;
         }
 
@@ -424,6 +506,9 @@
         </p>
         <p><input type="button" value="Check MetaSamurai 2 Item & Katana" id="button"></p>
     </form>
+    <p>FUSIONed Result：<br>
+    <div id='fusiontable'></div>
+    <hr>
     <p>属性が合わず、余っている保有トークン：<br>
     <div id='totaltable'></div>
     <hr>
