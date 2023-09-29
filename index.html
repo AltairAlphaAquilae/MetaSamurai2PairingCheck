@@ -27,7 +27,7 @@
                 var list_katana_vol = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 var list_item_vol = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 var list_ms2 = {}
-                var list_png = [0]
+                var list_png = []
                 var png_num = 0
                 var listed_png_num = 0
                 var list_katana_name = [
@@ -99,6 +99,7 @@
                 if (target) {
                     target.remove();
                 }
+
                 $.ajax({
                     type: 'get',
                     url: url_katana,
@@ -145,17 +146,10 @@
 
                         for (var i = 0; i < Object.keys(list_ms2).length; i++) {
                             expression = Object.entries(list_ms2)[i];
-                            $.ajax({
-                                type: 'get',
-                                url: 'https://fusion-metadata.metasamurai.world/' + expression[0],
-                                scriptCharset: 'utf-8',
-                                success: function (data) {
-                                    list_png[png_num++] = data.image
-                                },
-                                error: function (data) {
-                                    // Error
-                                }
-                            });
+
+                            fetch('https://fusion-metadata.metasamurai.world/' + expression[0])
+                            .then((response) => response.json())
+                            .then((data) => list_png.push(data.image));
                         }
                     },
                     error: function (data) {
