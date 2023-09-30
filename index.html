@@ -132,11 +132,10 @@
                     (async () => {
                         for (var i = 0; i < Object.keys(list_ms2).length; i++) {
                             expression = Object.entries(list_ms2)[i];
-
                             try {
                                 const response2 = await fetch('https://fusion-metadata.metasamurai.world/' + expression[0]);
                                 const data2 = await response2.json();
-                                list_png.push(data2.image);
+                                list_png.push(data2);
                             } catch (err) {
                                 console.log(err, 'error');
                                 continue;
@@ -145,18 +144,28 @@
                         var table = document.createElement('table');
                         table.id = "fusiontable_child";
                         for (var i = 0; i < list_png.length; i++) {
-                            if (i % 5 == 0) {
+                            if (i % 3 == 0) {
                                 tr = document.createElement('tr');
                             }
                             var td = document.createElement('td');
                             var imgTag = document.createElement('img');
-                            imgTag.src = list_png[i];
-                            imgTag.width = window.innerWidth / 6;
-                            imgTag.height = window.innerWidth / 6;
+                            imgTag.src = list_png[i].image;
+                            imgTag.width = window.innerWidth / 8;
+                            imgTag.height = window.innerWidth / 8;
                             td.appendChild(imgTag);
                             tr.appendChild(td);
+                            var td = document.createElement('td');
+                            var ul = document.createElement('ul');
+                            ul.setAttribute('id','attrList');
+                            list_png[i].attributes.forEach(function(element){
+                                var li = document.createElement('li');
+                                li.innerHTML=Object.entries(element)[0][1] + ": " + Object.entries(element)[1][1];
+                                ul.appendChild(li);
+                            })
+                            td.appendChild(ul);
+                            tr.appendChild(td);
                             listed_png_num++;
-                            if (listed_png_num % 5 == 0 || i == list_png.length - 1) {
+                            if (listed_png_num % 3 == 0 || i == list_png.length - 1) {
                                 table.appendChild(tr);
                                 listed_png_num = 0;
                             }
@@ -452,14 +461,8 @@
             white-space: nowrap;
         }
 
-        footer {
-            position: fixed;
-            width: 100%;
-            background-color: #C0C0C0;
-            padding: 15px 0;
-            bottom;
-            /*下に固定*/
-        }
+        ul{list-style-position: inside;padding-left: 0;text-align:left;list-style:none;display:block;}
+        li.item{list-style:none; padding:0;}
     </style>
 
 </head>
