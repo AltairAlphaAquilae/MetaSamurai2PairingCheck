@@ -157,6 +157,9 @@
                             var td = document.createElement('td');
                             var ul = document.createElement('ul');
                             ul.setAttribute('id','attrList');
+                            var li = document.createElement('li');
+                            li.innerHTML="ID : " + list_png[i].name.split('#')[1];
+                            ul.appendChild(li);
                             list_png[i].attributes.forEach(function(element){
                                 var li = document.createElement('li');
                                 li.innerHTML=Object.entries(element)[0][1] + ": " + Object.entries(element)[1][1];
